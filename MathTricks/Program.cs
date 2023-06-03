@@ -6,8 +6,8 @@
         private static Player player;
         private static List<Player> players = new List<Player>();
 
-        //private static List<Point> player1;
-        //private static List<Point> player2;
+        private static List<Point> player1;
+        private static List<Point> player2;
 
         private static int inputN;
         private static int inputM;
