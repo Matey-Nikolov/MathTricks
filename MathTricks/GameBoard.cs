@@ -6,8 +6,15 @@
 
         private int x;
         private int y;
-
         private string[,] boardMatrix;
+        private bool[,] visitedCells;
+
+        public bool[,] VisitedCells
+        {
+            get { return visitedCells; }
+            set { visitedCells = value; }
+        }
+
 
         public string[,] BoardMatrix
         {
@@ -56,6 +63,7 @@
         {
             X = x;
             Y = y;
+            VisitedCells = new bool[y, x];
         }
 
         public string[,] CreateBoard()
@@ -115,19 +123,29 @@
 
                 for (int col = 0; col < x; col++)
                 {
+                    SetCellColor(VisitedCells[row, col]); // Set cell color based on visited status
+
                     if (row == 0 && col == 0)
                     {
+                        VisitedCells[row, col] = true;
+
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.BackgroundColor = ConsoleColor.Yellow;
+
                         Console.Write($" {board[row, col],-3} ");
+
                         Console.ResetColor();
                         Console.Write("|");
                     }
                     else if (row == y - 1 && col == x - 1)
                     {
+                        VisitedCells[row, col] = true;
+
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.BackgroundColor = ConsoleColor.Cyan;
+
                         Console.Write($" {board[row, col],-3} ");
+
                         Console.ResetColor();
                         Console.Write("|");
                     }
@@ -150,6 +168,7 @@
             }
         }
 
+
         public void Move(Player currentPlayer)
         {
             while (!IsGameOver())
@@ -164,26 +183,60 @@
                 if (inputParts.Length != 2 || !int.TryParse(inputParts[0], out int row) || !int.TryParse(inputParts[1], out int col))
                 {
                     Console.WriteLine("Invalid input. Please try again.");
+                    Console.WriteLine();
                     continue;
                 }
                 else if (row < 1 || row > y || col < 1 || col > x)
                 {
                     Console.WriteLine("Invalid coordinates. Please try again.");
+                    Console.WriteLine();
                     continue;
                 }
 
                 row--;
                 col--;
 
-                if (currentPlayer.X_PlayerMove == row && currentPlayer.Y_PlayerMove == col)
+                if (VisitedCells[row, col])
                 {
-                    Console.WriteLine("Invalid coordinates. Please try again.");
+                    Console.WriteLine("Selected cell is already occupied. Please try again.");
+                    Console.WriteLine();
                     continue;
                 }
+                else
+                {
+                    if (!(VisitedCells[row, col] ||
+                        (row > 0 && col > 0 && VisitedCells[row - 1, col - 1]) ||
+                        (row > 0 && VisitedCells[row - 1, col]) ||
+                        (col > 0 && VisitedCells[row, col - 1]) ||
+                        (row < VisitedCells.GetLength(0) - 1 && col < VisitedCells.GetLength(1) - 1 && VisitedCells[row + 1, col + 1]) ||
+                        (row < VisitedCells.GetLength(0) - 1 && VisitedCells[row + 1, col]) ||
+                        (col < VisitedCells.GetLength(1) - 1 && VisitedCells[row, col + 1])))
+                    {
+                        Console.WriteLine("Selected cell is not adjacent to any true cells. Please try again.");
+                        Console.WriteLine();
+                        continue;
+                    }
 
-                string name = boardMatrix[row, col];
 
-                Console.WriteLine(name);
+                    VisitedCells[row, col] = true;
+                    string points = boardMatrix[row, col];
+
+                    if (points.StartsWith("/"))
+                    {
+                        currentPlayer.Score /= int.Parse(points.Remove(0, 1));
+
+                    }
+                    else if (points.StartsWith("*")) 
+                    {
+                        currentPlayer.Score *= int.Parse(points.Remove(0, 1));
+                    }
+                    else
+                    {
+                        currentPlayer.Score += int.Parse(points);
+                    }
+
+                    Console.WriteLine(currentPlayer.Score);
+                }
 
                 DisplayBoard(BoardMatrix);
             }
@@ -191,7 +244,21 @@
             Console.WriteLine("Game over!");
         }
 
-        public bool IsGameOver()
+        private void SetCellColor(bool isVisited)
+        {
+            if (isVisited)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = ConsoleColor.Yellow;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Black; // Set unvisited cell's foreground color
+                Console.BackgroundColor = ConsoleColor.Gray; // Set unvisited cell's background color
+            }
+        }
+
+        private bool IsGameOver()
         {
             return false;
         }
