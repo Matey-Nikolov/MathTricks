@@ -9,7 +9,9 @@
 
         static void Main()
         {
+            Console.Write("Enter a positive number for x:");
             bool resultN = uint.TryParse(Console.ReadLine(), out n);
+            Console.Write("Enter a positive number for y:");
             bool resultM = uint.TryParse(Console.ReadLine(), out m);
             //Validation(resultN, resultM);
 

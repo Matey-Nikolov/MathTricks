@@ -66,12 +66,18 @@ namespace MathTricks
 
         public string[,] CreateBoard()
         {
+
             BoardMatrix = new string[y, x];
 
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 {
+                    int randomNegativeNumber = rnd.Next(1, (int)y + 1);
+                    int randomNumber2 = rnd.Next(0, (int)y + 1);
+
+                    string[] mathFunctions = new string[] { "*2", "/2", $"-{randomNegativeNumber}", $"{randomNumber2}" };
+
                     if (i == 0 && j == 0)
                     {
                         BoardMatrix[j, i] = "0";
@@ -82,10 +88,8 @@ namespace MathTricks
                     }
                     else
                     {
-                        BoardMatrix[j, i] = rnd.Next(1, (int)y).ToString(); // Generates a random number between 1 and 10 and converts it to a string
-
+                        BoardMatrix[j, i] = mathFunctions[rnd.Next(0, 4)].ToString(); // Generates a random number between 1 and 10 and converts it to a string
                     }
-
                 }
             }
 
