@@ -2,6 +2,7 @@
 {
     public class Program
     {
+<<<<<<< Updated upstream
             /*
             private static GameBoard board;
             private static uint n;
@@ -119,6 +120,53 @@
                 }
                 Console.WriteLine();
             }
+=======
+        private static GameBoard board;
+        private static int inputN;
+        private static int inputM;
+        private static string[,] boardMatrix;
+
+        static void Main()
+        {
+            do
+            {
+                Console.Write("Enter the height of the board (minimum 4 and maximum 15): ");
+                if (!int.TryParse(Console.ReadLine(), out inputM) || inputM < 4 || inputM > 15)
+                {
+                    Console.WriteLine("Invalid input. Height must be a positive integer greater than or equal to 4. \r\n");
+                }
+
+            } while (inputM < 4 || inputM !> 15); 
+
+            do
+            {
+                Console.Write("Enter the width of the board (minimum 4 and maximum 15): ");
+                if (!int.TryParse(Console.ReadLine(), out inputN) || inputN < 4 || inputM > 15)
+                {
+                    Console.WriteLine("Invalid input. Width must be a positive integer greater than or equal to 4. \r\n");
+                }
+
+            } while (inputN < 4 || inputN !> 15);
+
+
+            Console.Clear();
+            Console.WriteLine("MathTricks");
+            Console.WriteLine("-----------------");
+
+
+            try
+            {
+                board = new GameBoard(inputN, inputM);
+            }
+
+            catch (ArgumentOutOfRangeException exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+
+            boardMatrix = board.CreateBoard();
+            board.DisplayBoard(boardMatrix);
+>>>>>>> Stashed changes
         }
     }
 }
