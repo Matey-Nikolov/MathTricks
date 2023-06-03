@@ -2,9 +2,35 @@
 {
     public class Program
     {
-        static void Main(string[] args)
+        private static GameBoard board;
+        private static uint n;
+        private static uint m;
+
+        static void Main()
         {
-            Console.WriteLine("Hello, World!");
+            bool resultN = uint.TryParse(Console.ReadLine(), out n);
+            bool resultM = uint.TryParse(Console.ReadLine(), out m);
+            //Validation(resultN, resultM);
+
+            try
+            {
+
+                board = new GameBoard(n, m);
+            }
+            catch(ArgumentOutOfRangeException exp)
+            { 
+                Console.WriteLine(exp.Message);
+            }
         }
+
+        /*
+        private static void Validation(bool resultN, bool resultM)
+        {
+            if (!resultN && !resultM)
+            {
+                Console.WriteLine("The inputs is not a valid positive integers.");
+            }
+        }*/
+
     }
 }
