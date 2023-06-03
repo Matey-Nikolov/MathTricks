@@ -109,6 +109,98 @@ namespace MathTricks
 
             return BoardMatrix;
         }
+<<<<<<< Updated upstream
+
+=======
+        private static void SetCellColor(bool isVisited)
+        {
+            if (isVisited)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = ConsoleColor.Yellow;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Black; // Set unvisited cell's foreground color
+                Console.BackgroundColor = ConsoleColor.Gray; // Set unvisited cell's background color
+            }
+        }
+
+        /*
+>>>>>>> Stashed changes
+        public void DisplayBoard(string[,] board)
+        {
+            Console.Write("    ");
+            for (int col = 0; col < x; col++)
+            {
+                if (col == 0)
+                    Console.Write($"{col + 1,3}");
+                else
+                    Console.Write($"{col + 1,6}");
+            }
+            Console.WriteLine();
+
+            Console.Write("   ");
+            for (int col = 0; col < x; col++)
+            {
+                Console.Write("------");
+            }
+            Console.WriteLine();
+
+            for (int row = 0; row < y; row++)
+            {
+                Console.Write($"{row + 1,2} |");
+
+                for (int col = 0; col < x; col++)
+                {
+<<<<<<< Updated upstream
+                    // Color the (0, 0) cell with red foreground and yellow background
+=======
+                    SetCellColor(VisitedCells[row, col]); // Set cell color based on visited status
+
+                    if (row == 0 && col == 0)
+                    {
+                        VisitedCells[row, col] = true;
+                      
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Yellow; 
+
+                        Console.Write($" {board[row, col],-3} ");
+
+                        Console.ResetColor();
+                        Console.Write("|");
+                    }
+                    else if (row == y - 1 && col == x - 1)
+                    {
+                        VisitedCells[row, col] = true;
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.BackgroundColor = ConsoleColor.Cyan;
+
+                        Console.Write($" {board[row, col],-3} ");
+
+                        Console.ResetColor();
+                        Console.Write("|");
+                    }
+                    else
+                    {
+                        Console.Write($" {board[row, col],-3} |");
+                    }
+                }
+
+                Console.WriteLine();
+
+                Console.Write("   ");
+                for (int col = 0; col < x; col++)
+                {
+                    Console.Write("------");
+                }
+                Console.WriteLine();
+
+                Console.ResetColor();
+            }
+        }
+        */
 
         public void DisplayBoard(string[,] board)
         {
@@ -135,7 +227,9 @@ namespace MathTricks
 
                 for (int col = 0; col < x; col++)
                 {
-                    // Color the (0, 0) cell with red foreground and yellow background
+                    SetCellColor(VisitedCells[row, col]); // Set cell color based on visited status
+
+>>>>>>> Stashed changes
                     if (row == 0 && col == 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -174,7 +268,12 @@ namespace MathTricks
             }
         }
 
+<<<<<<< Updated upstream
         public void PlayGame()
+=======
+
+        public void Move(Player currentPlayer)
+>>>>>>> Stashed changes
         {
             // Create the board
             CreateBoard();
