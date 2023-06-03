@@ -15,6 +15,9 @@
 
         static void Main()
         {
+            Console.WriteLine("MathTricks");
+            Console.WriteLine("-----------------");
+
             do
             {
                 Console.Write("Enter the height of the board (minimum 4 and maximum 15): ");
@@ -35,10 +38,7 @@
 
             } while (inputN < 4 || inputN! > 15);
 
-
             Console.Clear();
-            Console.WriteLine("MathTricks");
-            Console.WriteLine("-----------------");
 
             try
             {
