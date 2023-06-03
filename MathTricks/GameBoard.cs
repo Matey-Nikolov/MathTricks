@@ -8,8 +8,19 @@ namespace MathTricks
 {
     public class GameBoard
     {
+        Random rnd = new Random();
+
         private uint x;
         private uint y;
+
+        private string[,] boardMatrix;
+
+        public string[,] BoardMatrix
+        {
+            get { return boardMatrix; }
+            set { boardMatrix = value; }
+        }
+
 
         public uint X
         {
@@ -43,7 +54,7 @@ namespace MathTricks
                     throw new ArgumentOutOfRangeException("Min boards size is 4 by 4.");
                 }
 
-                x = value;
+                y = value;
             }
         }
 
@@ -51,6 +62,77 @@ namespace MathTricks
         { 
             X = x;
             Y = y;
+        }
+
+        public string[,] CreateBoard()
+        {
+            BoardMatrix = new string[y, x];
+
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    if (i == 0 && j == 0)
+                    {
+                        BoardMatrix[j, i] = "0";
+                    }
+                    else if (i == x - 1 && j == y - 1)
+                    {
+                        BoardMatrix[j, i] = "0";
+                    }
+                    else
+                    {
+                        BoardMatrix[j, i] = rnd.Next(1, (int)y).ToString(); // Generates a random number between 1 and 10 and converts it to a string
+
+                    }
+
+                }
+            }
+
+            return BoardMatrix;
+        }
+
+        public void DisplayBoard(string[,] board)
+        {
+            // Display column headers
+            Console.Write("    ");
+            for (int col = 0; col < x; col++)
+            {
+                if (col == 0)
+                    Console.Write($"{col + 1,3}");
+                else
+                    Console.Write($"{col + 1,6}");
+            }
+            Console.WriteLine();
+
+            // Display horizontal line
+            Console.Write("   ");
+            for (int col = 0; col < x; col++)
+            {
+                Console.Write("------");
+            }
+            Console.WriteLine();
+
+            // Display rows with board content
+            for (int row = 0; row < y; row++)
+            {
+                Console.Write($"{row + 1,2} |");
+
+                for (int col = 0; col < x; col++)
+                {
+                    Console.Write($" {board[row, col],-3} |");
+                }
+
+                Console.WriteLine();
+
+                // Display horizontal line
+                Console.Write("   ");
+                for (int col = 0; col < x; col++)
+                {
+                    Console.Write("------");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
