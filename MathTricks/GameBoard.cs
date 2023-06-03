@@ -6,8 +6,15 @@
 
         private int x;
         private int y;
-
         private string[,] boardMatrix;
+        private bool[,] visitedCells;
+
+        public bool[,] VisitedCells
+        {
+            get { return visitedCells; }
+            set { visitedCells = value; }
+        }
+
 
         public string[,] BoardMatrix
         {
@@ -56,6 +63,7 @@
         {
             X = x;
             Y = y;
+            VisitedCells = new bool[y, x];
         }
 
         public string[,] CreateBoard()
@@ -89,7 +97,7 @@
 
             return BoardMatrix;
         }
-
+        
         public void DisplayBoard(string[,] board)
         {
             Console.Write("    ");
@@ -117,17 +125,25 @@
                 {
                     if (row == 0 && col == 0)
                     {
+                        VisitedCells[row, col] = true;
+
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.BackgroundColor = ConsoleColor.Yellow;
+
                         Console.Write($" {board[row, col],-3} ");
+
                         Console.ResetColor();
                         Console.Write("|");
                     }
                     else if (row == y - 1 && col == x - 1)
                     {
+                        VisitedCells[row, col] = true;
+
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.BackgroundColor = ConsoleColor.Cyan;
+
                         Console.Write($" {board[row, col],-3} ");
+
                         Console.ResetColor();
                         Console.Write("|");
                     }
@@ -175,15 +191,19 @@
                 row--;
                 col--;
 
-                if (currentPlayer.X_PlayerMove == row && currentPlayer.Y_PlayerMove == col)
+                if (VisitedCells[row, col])
                 {
-                    Console.WriteLine("Invalid coordinates. Please try again.");
+                    Console.WriteLine("Selected cell is already occupied. Please try again.");
                     continue;
                 }
+                else
+                {
+                    VisitedCells[row, col] = true;
 
-                string name = boardMatrix[row, col];
+                    string name = boardMatrix[row, col];
 
-                Console.WriteLine(name);
+                    Console.WriteLine(name);
+                }
 
                 DisplayBoard(BoardMatrix);
             }
