@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-
-namespace MathTricks
+﻿namespace MathTricks
 {
     public class GameBoard
     {
@@ -90,7 +82,7 @@ namespace MathTricks
                     }
                     else
                     {
-                        BoardMatrix[j, i] = mathFunctions[rnd.Next(0, 4)].ToString(); // Generates a random number between 1 and 10 and converts it to a string
+                        BoardMatrix[j, i] = mathFunctions[rnd.Next(0, 4)].ToString();
                     }
                 }
             }
@@ -123,7 +115,6 @@ namespace MathTricks
 
                 for (int col = 0; col < x; col++)
                 {
-                    // Color the (0, 0) cell with red foreground and yellow background
                     if (row == 0 && col == 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -132,7 +123,6 @@ namespace MathTricks
                         Console.ResetColor();
                         Console.Write("|");
                     }
-                    // Color the (x, y) cell with green foreground and cyan background
                     else if (row == y - 1 && col == x - 1)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
@@ -149,7 +139,6 @@ namespace MathTricks
 
                 Console.WriteLine();
 
-                // Display horizontal line
                 Console.Write("   ");
                 for (int col = 0; col < x; col++)
                 {
@@ -157,9 +146,54 @@ namespace MathTricks
                 }
                 Console.WriteLine();
 
-                // Reset the console colors after each row
                 Console.ResetColor();
             }
+        }
+
+        public void Move(Player currentPlayer)
+        {
+            while (!IsGameOver())
+            {
+                Console.WriteLine($"Player {currentPlayer.Name}'s turn");
+                Console.Write("Enter the row and column to move (e.g., '2, 3'): ");
+             
+                string[] inputParts = Console.ReadLine()
+                    .Split(", ", StringSplitOptions.RemoveEmptyEntries);
+
+                // Ok
+                if (inputParts.Length != 2 || !int.TryParse(inputParts[0], out int row) || !int.TryParse(inputParts[1], out int col))
+                {
+                    Console.WriteLine("Invalid input. Please try again.");
+                    continue;
+                }
+                else if (row < 1 || row > y || col < 1 || col > x)
+                {
+                    Console.WriteLine("Invalid coordinates. Please try again.");
+                    continue;
+                }
+
+                row--;
+                col--;
+
+                if (currentPlayer.X_PlayerMove == row && currentPlayer.Y_PlayerMove == col)
+                {
+                    Console.WriteLine("Invalid coordinates. Please try again.");
+                    continue;
+                }
+
+                string name = boardMatrix[row, col];
+
+                Console.WriteLine(name);
+
+                DisplayBoard(BoardMatrix);
+            }
+
+            Console.WriteLine("Game over!");
+        }
+
+        public bool IsGameOver()
+        {
+            return false;
         }
     }
 }

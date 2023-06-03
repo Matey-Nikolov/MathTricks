@@ -9,12 +9,12 @@ namespace MathTricks
     public class Point
     {
 		private int x_PlayerMove;
-		private int y_PlayerMOve;
+		private int y_PlayerMove;
 
-		public int Y_PlayerMOve
+		public int Y_PlayerMove
         {
-			get { return y_PlayerMOve; }
-			set { y_PlayerMOve = value; }
+			get { return y_PlayerMove; }
+			set { y_PlayerMove = value; }
 		}
 
 		public int X_PlayerMove
@@ -26,7 +26,7 @@ namespace MathTricks
 		public Point(int x, int y)
 		{
 			X_PlayerMove = x;
-			Y_PlayerMOve = y;
+            y_PlayerMove = y;
 		}
 	}
 }
